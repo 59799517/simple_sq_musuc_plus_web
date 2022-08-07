@@ -62,47 +62,34 @@
                 <van-collapse v-model="activeNames">
                     <van-collapse-item title="准备下载" name="4" :value="taskreadyvalue">
                         <van-cell size="large" v-for="item in taskready" :key="item" :title="item.name"
-                            :value="item.svalue">
+                            :value="item.svalue" :label="item.label">
                         </van-cell>
                     </van-collapse-item>
                     <van-collapse-item title="正在进行" name="1" :value="taskrunvalue">
 
                         <van-cell size="large" v-for="item in taskrun" :key="item" :title="item.name"
-                            :value="item.svalue">
+                            :value="item.svalue" :label="item.label">
                         </van-cell>
 
                     </van-collapse-item>
                     <van-collapse-item title="下载完成" name="2" :value="tasksuccessvalue">
                         <van-cell size="large" v-for="item in tasksuccess" :key="item" :title="item.name"
-                            :value="item.svalue">
+                            :value="item.svalue" :label="item.label">
                         </van-cell>
                     </van-collapse-item>
                     <van-collapse-item title="下载失败" name="3" :value="taskerrorvalue">
                         <van-cell size="large" v-for="item in taskerror" :key="item" :title="item.name"
-                            :value="item.svalue">
+                            :value="item.svalue" :label="item.label">
                         </van-cell>
                     </van-collapse-item>
                 </van-collapse>
-
-
             </van-tab>
             <van-tab title="系统设置">
-
-
                 <h1>
                     懒得开发。。稍后再说。。
                 </h1>
-
-
             </van-tab>
         </van-tabs>
-
-
-
-
-
-
-
     </div>
 </template>
 <script>
@@ -120,6 +107,7 @@ export default {
 
     },
     setup(props, context) {
+      const testurl="http://127.0.0.1:8083";
         const searchValue = ref('');
         const searchType = ref(0);
         const searchOption = [
@@ -154,16 +142,16 @@ export default {
                     taskrun.value = []
                     taskerror.value = []
                     for (var abs in res.data.data.ready) {
-                        taskready.value.push({ "name": res.data.data.ready[abs].music.musicName, "svalue": res.data.data.ready[abs].music.musicArtists });
+                        taskready.value.push({ "name": res.data.data.ready[abs].musicname, "svalue": res.data.data.ready[abs].artistname ,"label":"专辑信息："+res.data.data.ready[abs].albumname+"-----"+"下载码率信息："+res.data.data.ready[abs].kwBrType});
                     }
                     for (var abs in res.data.data.success) {
-                        tasksuccess.value.push({ "name": res.data.data.success[abs].music.musicName, "svalue": res.data.data.success[abs].music.musicArtists });
+                        tasksuccess.value.push({ "name": res.data.data.success[abs].musicname, "svalue": res.data.data.success[abs].artistname  ,"label":"专辑信息："+res.data.data.success[abs].albumname+"-----"+"下载码率信息："+res.data.data.success[abs].kwBrType});
                     }
                     for (var abs in res.data.data.run) {
-                        taskrun.value.push({ "name": res.data.data.run[abs].music.musicName, "svalue": res.data.data.run[abs].music.musicArtists });
+                        taskrun.value.push({ "name": res.data.data.run[abs].musicname, "svalue": res.data.data.run[abs].artistname ,"label":"专辑信息："+res.data.data.run[abs].albumname+"-----"+"下载码率信息："+res.data.data.run[abs].kwBrType});
                     }
                     for (var abs in res.data.data.error) {
-                        taskerror.value.push({ "name": res.data.data.error[abs].music.musicName, "svalue": res.data.data.error[abs].music.musicArtists });
+                        taskerror.value.push({ "name": res.data.data.error[abs].musicname, "svalue": res.data.data.error[abs].artistname ,"label":"专辑信息："+res.data.data.error[abs].albumname+"-----"+"下载码率信息："+res.data.data.error[abs].kwBrType});
                     }
                 }
 
