@@ -8,9 +8,13 @@ export default defineConfig({
   // server: {
   //   host: '0.0.0.0'
   // },
+  build: {
+    manifest: false,
+    minify: "esbuild",
+  },
   plugins: [
     vue(),
-    
+
     Components({
       resolvers: [VantResolver()],
     }),

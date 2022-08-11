@@ -108,7 +108,7 @@ export default {
   components: {},
   props: {},
   setup(props, context) {
-    const testurl = "http://127.0.0.1:8083";
+    // const testurl = "http://127.0.0.1:8083";
     const searchValue = ref('');
     const parserText = ref('');
     const searchType = ref(0);
@@ -132,7 +132,7 @@ export default {
     const finished = ref(true);
     const activeNames = ref(['1']);
     const gettask = () => {
-      axios.get(testurl+"/getTask").then(res => {
+      axios.get("/getTask").then(res => {
         //加载歌曲
         if (res.data.code == 200) {
           tasksuccessvalue.value = res.data.data.success.length + "个"
@@ -177,7 +177,7 @@ export default {
 
     };
     const downloadParser = () => {
-      axios.post(testurl+"/downloadParser", {
+      axios.post("/downloadParser", {
         'text': parserText.value
       }).then(res => {
         if (res.data.code == 200) {
@@ -190,7 +190,7 @@ export default {
       })
     };
     const againTask = () => {
-      axios.get(testurl+"/againTask").then(res => {
+      axios.get("/againTask").then(res => {
         if (res.data.code == 200) {
           showToast('成功');
         }
@@ -198,7 +198,7 @@ export default {
 
     };
     const refreshTask = () => {
-      axios.get(testurl+"/refreshTask").then(res => {
+      axios.get("/refreshTask").then(res => {
         if (res.data.code == 200) {
           showToast('成功');
         }
@@ -206,7 +206,7 @@ export default {
 
     };
     const delAllTask = () => {
-      axios.get(testurl+"/delAllTask").then(res => {
+      axios.get("/delAllTask").then(res => {
         if (res.data.code == 200) {
           showToast('成功');
         }
@@ -214,14 +214,14 @@ export default {
 
     };
     const delErrorTask = () => {
-      axios.get(testurl+"/delErrorTask").then(res => {
+      axios.get("/delErrorTask").then(res => {
         if (res.data.code == 200) {
           showToast('成功');
         }
       })
     };
     const delSuccessTask = () => {
-      axios.get(testurl+"/delSuccessTask").then(res => {
+      axios.get("/delSuccessTask").then(res => {
         if (res.data.code == 200) {
           showToast('成功');
         }
@@ -242,7 +242,7 @@ export default {
     const querymusic = () => {
       if (searchType.value == 0) {
         searchList.value = []
-        axios.get(testurl+"/searchMusic/" + searchValue.value + "/50/1").then(res => {
+        axios.get("/searchMusic/" + searchValue.value + "/50/1").then(res => {
           //加载歌曲
           if (res.data.code == 200) {
             for (var abs in res.data.data.abslist) {
@@ -259,7 +259,7 @@ export default {
 
       } else if (searchType.value == 1) {
         searchList.value = []
-        axios.get(testurl+"/searchArtist/" + searchValue.value + "/50/1").then(res => {
+        axios.get("/searchArtist/" + searchValue.value + "/50/1").then(res => {
           //加载歌曲
           if (res.data.code == 200) {
             for (var abs in res.data.data.abslist) {
@@ -275,7 +275,7 @@ export default {
         })
       } else if (searchType.value == 2) {
         searchList.value = []
-        axios.get(testurl+"/searchAlbum/" + searchValue.value + "/50/1").then(res => {
+        axios.get("/searchAlbum/" + searchValue.value + "/50/1").then(res => {
           //加载歌曲
           if (res.data.code == 200) {
             for (var abs in res.data.data.albumlist) {
@@ -291,7 +291,7 @@ export default {
         })
       } else if (searchType.value == 3) {
         searchList.value = []
-        axios.get(testurl+"/searchArtist/" + searchValue.value + "/50/1").then(res => {
+        axios.get("/searchArtist/" + searchValue.value + "/50/1").then(res => {
           //加载歌曲
           if (res.data.code == 200) {
             for (var abs in res.data.data.abslist) {
@@ -313,7 +313,7 @@ export default {
     };
     const onDownliad = (e) => {
       if (e.currentTarget.getAttribute("searchType") == 0) {
-        axios.post(testurl+"/musicDownload/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
+        axios.post("/musicDownload/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
           if (res.data.code == 200) {
             showToast('提交成功，正在下载。');
           } else {
@@ -322,7 +322,7 @@ export default {
         })
       } else if (e.currentTarget.getAttribute("searchType") == 1) {
 
-        axios.post(testurl+"/ArtistDownload/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
+        axios.post("/ArtistDownload/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
           if (res.data.code == 200) {
             showToast('提交成功，正在下载。');
           } else {
@@ -339,7 +339,7 @@ export default {
         })
       } else if (e.currentTarget.getAttribute("searchType") == 3) {
 
-        axios.post(testurl+"/ArtistSongList/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
+        axios.post("/ArtistSongList/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
           if (res.data.code == 200) {
             showToast('提交成功，正在下载。');
           } else {
