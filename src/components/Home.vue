@@ -77,7 +77,7 @@
           </van-collapse-item>
         </van-collapse>
       </van-tab>
-      <van-tab title="歌单下载">
+      <van-tab title="文本歌单下载">
         <van-cell-group inset>
           <van-field
               v-model="parserText"
@@ -93,6 +93,38 @@
           <van-button @click="downloadParser"  type="primary" plain size="small">提交</van-button>
         </van-row>
         <van-divider dashed>注释:转换请参考：<a>https://yyrcd.com/n2s/</a></van-divider>
+      </van-tab>
+      <van-tab title="歌单下载（有声书下载）">
+        <van-cell-group inset>
+          <van-field
+              v-model="urlPath"
+              rows="1"
+              autosize
+              label="分享地址："
+              type="textarea"
+              placeholder="请输入"
+              show-word-limit
+          />
+        </van-cell-group>
+        <van-row justify="center" align="center">
+          <van-radio-group v-model="radioNum" direction="horizontal">
+            <van-radio name="1">歌单</van-radio>
+            <van-radio name="2">有声书</van-radio>
+          </van-radio-group>
+        </van-row>
+        <van-row v-if="radioNum==2" justify="center" align="center">
+
+          <van-cell-group inset>
+            <van-field v-model="bookName" label="书名" placeholder="书名" />
+            <van-field v-model="bookAuthor" label="作者" placeholder="作者" />
+          </van-cell-group>
+        </van-row>
+
+        <br>
+        <van-row justify="center" align="center">
+          <van-button    @click="downloadUrlParser"  type="primary" plain size="small">提交</van-button>
+        </van-row>
+        <van-divider dashed>在酷我音乐中找到分享URL地址填入即可</van-divider>
       </van-tab>
     </van-tabs>
   </div>
@@ -130,6 +162,10 @@ export default {
     const loading = ref(false);
     const refreshing = ref(false);
     const finished = ref(true);
+    const radioNum = ref("1");
+    const urlPath = ref("");
+    const bookName = ref("");
+    const bookAuthor = ref("");
     const activeNames = ref(['1']);
     const gettask = () => {
       axios.get("/getTask").then(res => {
@@ -189,6 +225,50 @@ export default {
         }
       })
     };
+    const downloadUrlParser = () => {
+
+      if (radioNum.value == '2') {
+        if (bookName.value.length < 1 && bookAuthor.value.length < 1) {
+          //不符合标准
+          showToast("书名，作者不能为空");
+        } else {
+          //书提交
+          axios.post("/parserUrlAndDownload", {
+            'url': urlPath.value,
+            'br': 320,
+            'isAudioBook': true,
+            'bookName': bookName.value,
+            'artist': bookAuthor.value
+          }).then(res => {
+            if (res.data.code == 200) {
+              urlPath.value = '';
+              showToast("已提交，请在下载管理处查看");
+            } else {
+              showToast('下载失败');
+            }
+          })
+        }
+
+
+      } else {
+        //歌单提交
+        axios.post("/parserUrlAndDownload", {
+          'url': urlPath.value,
+          'br': 2000,
+          'isAudioBook': false,
+          'bookName': 'null',
+          'artist': 'null'
+        }).then(res => {
+          if (res.data.code == 200) {
+            urlPath.value = '';
+            showToast("已提交，请在下载管理处查看");
+          } else {
+            showToast('下载失败');
+          }
+        })
+      }
+    };
+
     const againTask = () => {
       axios.get("/againTask").then(res => {
         if (res.data.code == 200) {
@@ -367,6 +447,10 @@ export default {
       taskready,
       taskerror,
       taskrun,
+      radioNum,
+      urlPath,
+      bookName,
+      bookAuthor,
       onLoad,
       onRefresh,
       querymusic,
@@ -377,9 +461,9 @@ export default {
       delAllTask,
       delErrorTask,
       delSuccessTask,
-      downloadParser
-
-    };
+      downloadParser,
+      downloadUrlParser
+    }
   }
 }
 </script>
