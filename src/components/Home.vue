@@ -23,6 +23,8 @@
               <template #right-icon>
                 <van-icon name="add-o" style="margin-left:2rem" size="2rem" class="search-icon"
                           @click="onDownliad" :searchid="item.id" :searchType="item.searchType"/>
+                <van-icon name="play" style="margin-left:2rem" size="2rem" class="search-icon"
+                          @click="openPlayUrl" :searchid="item.id" :searchType="item.searchType"/>
               </template>
             </van-cell>
           </van-list>
@@ -427,7 +429,24 @@ export default {
           }
         })
       }
-    }
+
+          };
+    const openPlayUrl = (e) => {
+      if (e.currentTarget.getAttribute("searchType") == 0) {
+        axios.post("/getplayUrl/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
+            window.open(res.data, '_blank');
+        })
+      } else if (e.currentTarget.getAttribute("searchType") == 1) {
+        showToast('暂不支持，歌手全部歌曲播放。');
+      } else if (e.currentTarget.getAttribute("searchType") == 2) {
+        showToast('暂不支持，专辑播放。');
+      } else if (e.currentTarget.getAttribute("searchType") == 3) {
+        showToast('暂不支持，全部歌曲播放。');
+      }
+    };
+
+
+
 
     return {
       searchValue,
@@ -455,6 +474,7 @@ export default {
       onRefresh,
       querymusic,
       onDownliad,
+      openPlayUrl,
       gettask,
       againTask,
       refreshTask,
