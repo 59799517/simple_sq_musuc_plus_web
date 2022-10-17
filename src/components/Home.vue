@@ -434,7 +434,8 @@ export default {
     const openPlayUrl = (e) => {
       if (e.currentTarget.getAttribute("searchType") == 0) {
         axios.post("/getplayUrl/" + e.currentTarget.getAttribute("searchid") + "/2000").then(res => {
-            window.open(res.data, '_blank');
+          console.log("-------打开播放链接------------"+res.data.data)
+          window.open(res.data.data,'_blank')
         })
       } else if (e.currentTarget.getAttribute("searchType") == 1) {
         showToast('暂不支持，歌手全部歌曲播放。');
