@@ -132,7 +132,6 @@ export function ArtistDownload(id="0",plugType="kw",br=2000) {
 }
 
 
-
 /**
  * 根据专辑id下载全部专辑
  * @param id
