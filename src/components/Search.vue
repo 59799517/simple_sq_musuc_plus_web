@@ -145,6 +145,7 @@ let PreviousPage =()=>{
   <TopWitge/>
   <n-form
       inline
+      @keyup.enter.native="d_selectmusic"
   >
     <n-select
         v-model:value="plugType_value"
@@ -194,7 +195,7 @@ let PreviousPage =()=>{
           </template>
           <n-thing :title="item.albumName" :description="item.artistName" />
           <template #suffix>
-            <n-button @click="b_AlbumDownload(item.id)"> 下载该专辑全部歌曲</n-button>
+            <n-button @click="b_AlbumDownload(item.albumid)"> 下载该专辑全部歌曲</n-button>
           </template>
         </n-list-item>
       </n-list>
@@ -211,11 +212,11 @@ let PreviousPage =()=>{
           </template>
           <n-thing :title="item.artistName" :description="item.total+'张专辑'" />
           <template #suffix>
-            <n-button @click="b_ArtistDownload(item.id)"> 下载全部专辑歌曲</n-button>
+            <n-button @click="b_ArtistDownload(item.artistid)"> 下载全部专辑歌曲</n-button>
 
             <n-tooltip :show-arrow="false" trigger="hover">
               <template #trigger>
-                <n-button @click="b_ArtistDownload(item.id)"> 下载全部歌曲</n-button>
+                <n-button @click="b_ArtistDownload(item.artistid)"> 下载全部歌曲</n-button>
               </template>
               部分歌曲不在专辑中此功能也可下载（部分不支持比如鹅厂）
             </n-tooltip>

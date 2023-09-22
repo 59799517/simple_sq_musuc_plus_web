@@ -1,6 +1,15 @@
 <script setup>
+import {logout} from "../utils/api.js";
 
 let clockTheam = inject('changetheme')
+
+let logout_b= ()=>{
+  logout().then(value=>{
+    window.$message.success(value.data.msg)
+  })
+}
+
+
 </script>
 
 <template>
@@ -40,6 +49,7 @@ let clockTheam = inject('changetheme')
         <n-button @click="clockTheam" quaternary>
           切换主题
         </n-button>
+        <n-button @click="logout_b">退出</n-button>
       </div>
     </div>
 

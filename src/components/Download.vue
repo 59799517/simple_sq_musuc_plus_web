@@ -46,29 +46,48 @@ onBeforeMount(()=>{
 })
 
 //页面点击回调
-let waiting_pageUpdata=(pageIndex)=>{
-  waiting_index.value = pageIndex;
+let waiting_pageUpdata=(type)=>{
+  if (type==='next'){
+    waiting_index.value++
+  }else{
+    waiting_index.value--
+  }
   getDownloadInfo('waiting',pageSizes.value,waiting_index.value).then(value=>{
     waiting_total.value = value.data.data.total
     waiting_data.value = value.data.data.records;
   })
 }
-let loading_pageUpdata=(pageIndex)=>{
-  loading_index.value = pageIndex;
+let loading_pageUpdata=(type)=>{
+
+
+  if (type==='next'){
+    loading_index.value++
+  }else{
+    loading_index.value--
+  }
   getDownloadInfo('loading',pageSizes.value,loading_index.value).then(value=>{
     loading_total.value = value.data.data.total
     loading_data.value = value.data.data.records;
   })
 }
-let success_pageUpdata=(pageIndex)=>{
-  success_index.value = pageIndex;
+let success_pageUpdata=(type)=>{
+
+  if (type==='next'){
+    success_index.value++
+  }else{
+    success_index.value--
+  }
   getDownloadInfo('success',pageSizes.value,success_index.value).then(value=>{
     success_total.value = value.data.data.total
     success_data.value = value.data.data.records;
   })
 }
-let error_pageUpdata=(pageIndex)=>{
-  error_index.value = pageIndex;
+let error_pageUpdata=(type)=>{
+  if (type==='next'){
+    error_index.value++
+  }else{
+    error_index.value--
+  }
   getDownloadInfo('error',pageSizes.value,error_index.value).then(value=>{
     error_total.value = value.data.data.total
     error_data.value = value.data.data.records;
@@ -179,6 +198,7 @@ let refreshTask_b =()=>{
     }
   })
 }
+
 </script>
 
 <template>
@@ -203,12 +223,15 @@ let refreshTask_b =()=>{
             </template>
           </n-list-item>
         </n-list>
-        <n-pagination class="page"
-            v-model:page="waiting_index"
-            v-model:page-size="pageSizes"
-            :page-count="waiting_total/pageSizes"
-             :on-update="waiting_pageUpdata"
-        />
+        <div class="page">
+          <n-button @click="waiting_pageUpdata('prev')">
+            上一页
+          </n-button>
+          <n-h5> {{waiting_index}}/{{(Math.ceil(waiting_total/pageSizes))}}</n-h5>
+          <n-button @click="waiting_pageUpdata('next')">
+            下一页
+          </n-button>
+        </div>
       </n-tab-pane>
       <n-tab-pane name="loading" tab="下载中">
         <div class="operat">
@@ -227,12 +250,15 @@ let refreshTask_b =()=>{
             </template>
           </n-list-item>
         </n-list>
-        <n-pagination class="page"
-            v-model:page="loading_index"
-            v-model:page-size="pageSizes"
-            :page-count="loading_total/pageSizes"
-             :on-update="loading_pageUpdata"
-        />
+        <div class="page">
+          <n-button @click="loading_pageUpdata('prev')">
+            上一页
+          </n-button>
+          <n-h5> {{loading_index}}/{{(Math.ceil(loading_total/pageSizes))}}</n-h5>
+          <n-button @click="loading_pageUpdata('next')">
+            下一页
+          </n-button>
+        </div>
       </n-tab-pane>
       <n-tab-pane name="error" tab="错误">
         <div class="operat">
@@ -259,12 +285,16 @@ let refreshTask_b =()=>{
             </template>
           </n-list-item>
         </n-list>
-        <n-pagination class="page"
-            v-model:page="error_index"
-            v-model:page-size="pageSizes"
-            :page-count="error_total/pageSizes"
-            :on-update="error_pageUpdata"
-        />
+        <div class="page">
+          <n-button @click="error_pageUpdata('prev')">
+            上一页
+          </n-button>
+          <n-h5> {{error_index}}/{{(Math.ceil(error_total/pageSizes))}}</n-h5>
+          <n-button @click="error_pageUpdata('next')">
+            下一页
+          </n-button>
+        </div>
+
       </n-tab-pane>
       <n-tab-pane name="success" tab="已完成">
         <div class="operat">
@@ -285,12 +315,16 @@ let refreshTask_b =()=>{
             </template>
           </n-list-item>
         </n-list>
-        <n-pagination class="page"
-            v-model:page="success_index"
-            v-model:page-size="pageSizes"
-            :page-count="success_total/pageSizes"
-            :on-update="success_pageUpdata"
-        />
+        <div class="page">
+          <n-button @click="success_pageUpdata('prev')">
+            上一页
+          </n-button>
+          <n-h5> {{success_index}}/{{(Math.ceil(success_total/pageSizes))}}</n-h5>
+          <n-button @click="success_pageUpdata('next')">
+            下一页
+          </n-button>
+        </div>
+
       </n-tab-pane>
     </n-tabs>
 

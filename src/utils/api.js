@@ -1,8 +1,9 @@
 import request from "./request.js";
 import qs from "qs";
 
-const baseUrl = 'http://127.0.0.1:8099'
+// const baseUrl = 'http://127.0.0.1:8099'
 
+const baseUrl = ''
 
 /**
  * 登录
@@ -17,6 +18,19 @@ export function login(username,password) {
         data:{"username":username,"password":password}
     });
 }
+
+/**
+ * 登出 退出
+ * @returns {*}
+ */
+
+export function logout() {
+    return request({
+        url: baseUrl + "/logout" ,
+        method: "post"
+    });
+}
+
 
 /**
  * 检查是否登录或者token是否超时
@@ -257,4 +271,36 @@ export function refreshTask() {
         method: "get"
     });
 }
+
+
+/**
+ * 文本解析下载
+ * @param text
+ * @returns {*}
+ */
+export function downloadParser(text) {
+    return request({
+        url: baseUrl + "/downloadParser",
+        method: "post",
+        data: {"text":text,"br":"2000","plugType":"kw"}
+    });
+}
+
+
+/**
+ *
+ * @param url
+ * @param isAudioBook
+ * @param bookName
+ * @param artist
+ * @returns {*}
+ */
+export function parserUrlAndDownload(url,isAudioBook,bookName,artist) {
+    return request({
+        url: baseUrl + "/parserUrlAndDownload",
+        method: "post",
+        data: {"url":url,"isAudioBook":isAudioBook,"bookName":bookName,"artist":artist,"br":"2000","plugType":"kw"}
+    });
+}
+
 

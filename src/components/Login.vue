@@ -37,20 +37,29 @@ onBeforeMount(()=>{
 <!--      返回-->
 <!--    </n-card>-->
 <!--  </n-modal>-->
-
-  <div class="flex flex-col w-screen h-screen  bg-gray-50  items-center justify-center ">
-    <div class="w-100 h-70 p-8 flex flex-col items-center bg-gray-300 rounded-lg border border-gray-400">
-      <h2 class="text-2xl md:text-3xl font-bold text-indigo-900">登录</h2>
-      <n-input class="h-10 my-3 w-9/4" type="text" v-model:value="username" placeholder="请输入用户名" required />
-      <n-input class="h-10 my-3 w-9/12" type="password" v-model:value="password" placeholder="请输入密码" required/>
-      <n-button class="h-10 w-3/4 my-3  rounded-lg" type="primary" @click="loginp">Login</n-button>
+<n-form @keyup.enter.native="loginp">
+  <div class=" ">
+    <div class="">
+      <h2 class=" home ">登录</h2>
+      <n-input class=""  size="large" type="text" v-model:value="username" placeholder="请输入用户名"  />
+      <br/>
+      <n-input class="" size="large" type="password" v-model:value="password" placeholder="请输入密码"  show-password-on="mousedown" />
+      <div class="home" > <n-button class= "" type="primary" @click="loginp" :keyboard="true">Login</n-button>
+      </div>
     </div>
   </div>
+</n-form>
+
   <n-message-provider>
     <content />
   </n-message-provider>
 </template>
 
 <style scoped>
-
+.home{
+  display: flex;
+  place-items: center;
+  flex-direction: row;
+  justify-content: center ;
+}
 </style>
