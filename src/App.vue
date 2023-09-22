@@ -6,10 +6,17 @@ import { darkTheme,NMessageProvider  } from "naive-ui";
 import { provide } from 'vue'
 import MessageApi from "./components/message-api.vue";
 
-let theme=darkTheme;
+let theme=ref(darkTheme);
+let name=ref('dark');
 const changetheme = () => {
-  theme.value = theme.value == null ? darkTheme : null;
-  // themebtntit.value = themebtntit.value == "亮色主题" ? "暗色主题" : "亮色主题";
+
+  if (name.value === 'dark') {
+    theme.value = null;
+    name.value='';
+  }else{
+    theme.value =darkTheme;
+    name.value='dark';
+  }
 };
 provide("changetheme",changetheme);
 </script>

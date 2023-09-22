@@ -1,9 +1,9 @@
 import request from "./request.js";
 import qs from "qs";
 
-// const baseUrl = 'http://127.0.0.1:8099'
+const baseUrl = 'http://127.0.0.1:8099'
 
-const baseUrl = ''
+// const baseUrl = ''
 
 /**
  * 登录
