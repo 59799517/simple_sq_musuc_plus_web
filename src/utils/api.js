@@ -1,9 +1,10 @@
 import request from "./request.js";
 import qs from "qs";
 
-const baseUrl = 'http://127.0.0.1:8099'
-
-// const baseUrl = ''
+// const baseUrl = 'http://127.0.0.1:8099'
+const baseUrl = ''
+//
+// const baseUrl = '/sqmusic-api'
 
 /**
  * 登录
@@ -18,6 +19,7 @@ export function login(username,password) {
         data:{"username":username,"password":password}
     });
 }
+
 
 /**
  * 登出 退出
@@ -126,6 +128,19 @@ export function musicDownload(id="0",plugType="kw",br=2000) {
         url: baseUrl + "/musicDownload",
         method: "post",
         data:{"id":id,"plugType":plugType,"br":br}
+    });
+}
+/**
+ * 获取单曲播放链接
+ * @param id
+ * @param plugType 插件名称
+ * @param br 2000是 flac
+ * @returns {*}
+ */
+export function getPlayUrL(id="0",plugType="kw") {
+    return request({
+        url: baseUrl + "/musicUrl/"+plugType+"/"+id,
+        method: "get",
     });
 }
 

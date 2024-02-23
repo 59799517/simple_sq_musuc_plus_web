@@ -1,6 +1,6 @@
 <script setup>
 import {ref,nextTick } from 'vue'
-import {AlbumDownload, ArtistDownload, musicDownload, selectmusic, selectOption} from "../utils/api.js";
+import {AlbumDownload, ArtistDownload, getPlayUrL, musicDownload, selectmusic, selectOption} from "../utils/api.js";
 import axios from 'axios'
 import TopWitge from "./TopWitge.vue";
 
@@ -62,13 +62,13 @@ let update_select_type=(value, option)=>{
 }
 
 
-
     // @update:value="handleUpdateValue"
 /**
  * 初始化搜索类型选项
  */
 onBeforeMount(()=>{
   selectOption().then(value => {
+    console.log(value)
     nextTick(()=>{
       select_options.value = value.data.data;
     })
@@ -90,16 +90,28 @@ let d_selectmusic= ()=>{
 }
 
 // 单曲下载
-let b_musicDownload=(id)=>{
-  musicDownload(id,plugType_value.value,2000).then(value=>{
-    if (value.data.code===200){
+let b_musicDownload=(id)=> {
+  musicDownload(id, plugType_value.value, 2000).then(value => {
+    if (value.data.code === 200) {
       window.$message.success("提交成功加入待下载")
-    }else{
-      window.$message.error("提交失败："+value.data.msg)
+    } else {
+      window.$message.error("提交失败：" + value.data.msg)
     }
   })
 }
-let b_ArtistDownload=(id)=>{
+
+  let b_musicPlayerURl=(id)=> {
+    getPlayUrL(id, plugType_value.value).then(value => {
+      if (value.data.code === 200) {
+        window.open(value.data.data.url, '_blank');
+      } else {
+        window.$message.error("好像没获取到数据：" + value.data.msg)
+      }
+    })
+
+  }
+
+    let b_ArtistDownload=(id)=>{
   ArtistDownload(id,plugType_value.value,2000).then(value=>{
     if (value.data.code===200){
       window.$message.success("提交成功加入待下载")
@@ -177,6 +189,7 @@ let PreviousPage =()=>{
             />
           </template>
           <n-thing :title="item.name" :description="item.artistName" />
+
           <template #suffix>
             <n-button @click="b_musicDownload(item.id)"> 下载</n-button>
           </template>

@@ -9,7 +9,6 @@ let loginp =()=>{
     window.localStorage.setItem("token", JSON.stringify(value.data.tokenValue))
     if(value.data.code===200){
       window.localStorage.setItem("token",value.data.data.tokenValue)
-
       getAllSet().then((value)=>{
         window.localStorage.setItem("setinfo",JSON.stringify(value.data.data))
       })
